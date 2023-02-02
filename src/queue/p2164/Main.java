@@ -1,4 +1,4 @@
-package src.queue;
+package src.queue.p2164;
 
 import java.util.LinkedList;
 import java.util.Queue;
