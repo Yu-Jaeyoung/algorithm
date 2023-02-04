@@ -1,4 +1,4 @@
-package src.queue.p2164;
+package src.baekjoon.queue.p2164;
 
 import java.util.LinkedList;
 import java.util.Queue;

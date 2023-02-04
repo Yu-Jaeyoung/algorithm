@@ -1,4 +1,4 @@
-package src.tree.p1991;
+package src.baekjoon.tree.p1991;
 
 import java.io.BufferedReader;
 import java.io.IOException;
