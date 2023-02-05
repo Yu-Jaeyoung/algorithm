@@ -109,7 +109,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
         Tree tree = new Tree();
         //System.out.print("노드 개수 입력 : ");
-        int nodeCount = Integer.parseInt(String.valueOf(bufferedReader.readLine()));
+        int nodeCount = Integer.parseInt(bufferedReader.readLine());
 
         for (int i = 0; i < nodeCount; i++) {
             //System.out.print("입력 : ");
