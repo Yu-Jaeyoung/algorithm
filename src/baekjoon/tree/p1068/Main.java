@@ -4,7 +4,6 @@ package src.baekjoon.tree.p1068;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.StringTokenizer;
 
 class Node {
@@ -39,6 +38,7 @@ class Node {
 }
 
 class Tree {
+    int count = 0;
     Node node;
 
     void createNewTree(int nodeNum, int parentNodeNum) {
@@ -47,50 +47,55 @@ class Tree {
                 node = new Node(nodeNum);
             }
         } else {
-            recursiveTreeTraversal(node, nodeNum, parentNodeNum);
+            recursiveTreeTraversalForCreate(node, nodeNum, parentNodeNum);
         }
     }
 
-    void recursiveTreeTraversal(Node node, int nodeNum, int parentNodeNum) {
+    void recursiveTreeTraversalForCreate(Node node, int nodeNum, int parentNodeNum) {
         if (node == null) {
             return;
         }
 
-        if (node.getLeft() == null && node.getNodeNum() == parentNodeNum) {
-            node.setLeft(new Node(nodeNum));
-        } else if (node.getRight() == null && node.getNodeNum() == parentNodeNum) {
-            node.setRight(new Node(nodeNum));
+        if (node.getNodeNum() == parentNodeNum) {
+            if (node.getLeft() == null) {
+                node.setLeft(new Node(nodeNum));
+                return;
+            } else if (node.getRight() == null) {
+                node.setRight(new Node(nodeNum));
+                return;
+            } else {
+                System.out.println("left, right node full");
+            }
         } else {
-            recursiveTreeTraversal(node.getLeft(), nodeNum, parentNodeNum);
-            recursiveTreeTraversal(node.getRight(), nodeNum, parentNodeNum);
+            recursiveTreeTraversalForCreate(node.getLeft(), nodeNum, parentNodeNum);
+            recursiveTreeTraversalForCreate(node.getRight(), nodeNum, parentNodeNum);
         }
     }
 
-    void deleteTreeTraversal(int nodeNum) {
-        if (nodeNum == -1) {
+    void deleteTree(int nodeNum) {
+        if (nodeNum == 0) {
             node = null;
         } else {
-            deleteNode(node, nodeNum);
+            recursiveTreeTraversalForDelete(node, nodeNum);
         }
     }
 
-    void deleteNode(Node node, int nodeNum) {
+    void recursiveTreeTraversalForDelete(Node node, int nodeNum) {
         if (node == null) {
             return;
         }
 
-        if (node.getLeft().getNodeNum() == nodeNum) {
+        if (node.getLeft() != null && node.getLeft().getNodeNum() == nodeNum) {
             node.setLeft(null);
-        } else if (node.getRight().getNodeNum() == nodeNum) {
+        } else if (node.getRight() != null && node.getRight().getNodeNum() == nodeNum) {
             node.setRight(null);
         } else {
-            deleteNode(node.getLeft(), nodeNum);
-            deleteNode(node.getRight(), nodeNum);
+            recursiveTreeTraversalForDelete(node.getLeft(), nodeNum);
+            recursiveTreeTraversalForDelete(node.getRight(), nodeNum);
         }
     }
 
     int checkLeaf(Node node) {
-        int count = 0;
         if (node != null) {
             if (node.getLeft() == null && node.getRight() == null) {
                 count++;
@@ -119,14 +124,12 @@ public class Main {
 
         for (int i = 0; i < nodeCount; i++) {
             int parentNodeNum = Integer.parseInt(token.nextToken());
-            System.out.println(parentNodeNum);
             tree.createNewTree(i, parentNodeNum);
         }
 
-
         int deleteNodeNum = Integer.parseInt(bufferedReader.readLine());
 
-        tree.deleteTreeTraversal(deleteNodeNum);
+        tree.deleteTree(deleteNodeNum);
 
         System.out.println(tree.checkLeaf(tree.node));
     }
