@@ -11,11 +11,8 @@ import java.util.StringTokenizer;
 class Node {
     int nodeNum;
 
-    List childNode = new ArrayList<Node>();
-
-    public int getNodeNum() {
-        return nodeNum;
-    }
+    int childNodeCount = 0;
+    List<Node> childNode = new ArrayList<Node>();
 
     Node(int nodeNum) {
         this.nodeNum = nodeNum;
@@ -23,7 +20,6 @@ class Node {
 }
 
 class Tree {
-    int count = 0;
     Node rootNode;
 
     void createNode(int nodeNum, int parentNodeNum) {
@@ -32,41 +28,67 @@ class Tree {
                 rootNode = new Node(nodeNum);
             }
         } else {
-            TreeTraversalForCreate(rootNode, nodeNum, parentNodeNum);
+            treeTraversalForCreate(rootNode, nodeNum, parentNodeNum);
         }
     }
 
-    void TreeTraversalForCreate(Node node, int nodeNum, int parentNodeNum) {
+    void treeTraversalForCreate(Node node, int nodeNum, int parentNodeNum) {
 
-        if (node == null) {
-            return;
-        }
-
-        Node checkNode;
+        Node forCheckNode;
 
         if (node.nodeNum == parentNodeNum) {
             node.childNode.add(new Node(nodeNum));
+            node.childNodeCount++;
             return;
         } else {
-            for (int i = 0; i < node.childNode.size(); i++) {
-                checkNode = (Node) node.childNode.get(i);
-                if (checkNode.nodeNum == parentNodeNum) {
-                    checkNode.childNode.add(new Node(nodeNum));
+            for (int i = 0; i < node.childNodeCount; i++) {
+                forCheckNode = node.childNode.get(i);
+                if (forCheckNode.nodeNum == parentNodeNum) {
+                    forCheckNode.childNode.add(new Node(nodeNum));
+                    forCheckNode.childNodeCount++;
                     return;
+                } else {
+                    treeTraversalForCreate(forCheckNode, nodeNum, parentNodeNum);
                 }
             }
         }
-
-        TreeTraversalForCreate();
-
     }
 
 
-    void recursiveTreeTraversalForDelete() {
+    void treeTraversalForDelete(Node node, int parentNodeNum) {
+        Node forCheckNode;
+
+        if (node.nodeNum == parentNodeNum) {
+            node.childNode.clear();
+            node.childNodeCount = 0;
+        } else {
+            for (int i = 0; i < node.childNodeCount; i++) {
+                forCheckNode = node.childNode.get(i);
+                if (forCheckNode.nodeNum == parentNodeNum) {
+                    forCheckNode.childNode.clear();
+                    forCheckNode.childNodeCount = 0;
+                    return;
+                } else {
+                    treeTraversalForDelete(forCheckNode, parentNodeNum);
+                }
+            }
+        }
     }
 
-    void checkLeaf() {
-
+    int checkLeaf(Node node) {
+        Node forCheckNode;
+        int count = 0;
+        if (node != null) {
+            for (int i = 0; i < node.childNodeCount; i++) {
+                forCheckNode = node.childNode.get(i);
+                if (forCheckNode.childNodeCount == 0) {
+                    count++;
+                } else {
+                    checkLeaf(forCheckNode);
+                }
+            }
+        }
+        return count;
     }
 }
 
@@ -90,7 +112,7 @@ public class Main {
 
         int deleteNodeNum = Integer.parseInt(bufferedReader.readLine());
 
-        tree.deleteNode(deleteNodeNum);
+        tree.treeTraversalForDelete(tree.rootNode, deleteNodeNum);
 
         System.out.println(tree.checkLeaf(tree.rootNode));
     }
