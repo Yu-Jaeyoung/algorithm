@@ -1,24 +1,31 @@
 package src.baekjoon.floyd_warshall.p11404;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 public class Main {
-    public static void main(String[] args) {
-        Floyd floyd = new Floyd(5);
-        floyd.firstAddEdge(5);
-        floyd.addEdge(1,2,2);
-        floyd.addEdge(1,3,3);
-        floyd.addEdge(1,4,1);
-        floyd.addEdge(1,5,10);
-        floyd.addEdge(2,4,2);
-        floyd.addEdge(3,4,1);
-        floyd.addEdge(3,5,1);
-        floyd.addEdge(4,5,3);
-        floyd.addEdge(3,5,10);
-        floyd.addEdge(3,1,8);
-        floyd.addEdge(1,4,2);
-        floyd.addEdge(5,1,7);
-        floyd.addEdge(3,4,2);
-        floyd.addEdge(5,2,4);
-        floyd.floyd(5);
+    public static BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+    public static void main(String[] args) throws IOException {
+
+        int maxVertexNum = Integer.parseInt(bufferedReader.readLine());
+        Floyd floyd = new Floyd(maxVertexNum);
+        floyd.makeGraph(maxVertexNum);
+
+        int edgeCount = Integer.parseInt(bufferedReader.readLine());
+
+        for (int i = 0; i < edgeCount; i++) {
+            String lineString = bufferedReader.readLine();
+            StringTokenizer token = new StringTokenizer(lineString);
+            int start = Integer.parseInt(token.nextToken());
+            int end = Integer.parseInt(token.nextToken());
+            int weight = Integer.parseInt(token.nextToken());
+            floyd.addEdge(start, end, weight);
+        }
+
+        floyd.floyd(maxVertexNum);
     }
 
 }
@@ -27,14 +34,14 @@ class Floyd {
 
     private int[][] graph;
 
-    Floyd(int num) {
-        graph = new int[num][num];
+    Floyd(int maxVertexNum) {
+        graph = new int[maxVertexNum][maxVertexNum];
     }
 
 
-    public void firstAddEdge(int num) {
-        for (int i = 0; i < num; i++) {
-            for (int j = 0; j < num; j++) {
+    public void makeGraph(int maxVertexNum) {
+        for (int i = 0; i < maxVertexNum; i++) {
+            for (int j = 0; j < maxVertexNum; j++) {
                 graph[i][j] = 100001;
                 if (i == j) {
                     graph[i][j] = 0;
@@ -53,31 +60,33 @@ class Floyd {
         }
     }
 
-    public void printGraph(int maxNode) {
-        for (int i = 0; i < maxNode; i++) {
-            for (int j = 0; j < maxNode; j++) {
+    public void printGraph(int maxVertexNum) {
+        for (int i = 0; i < maxVertexNum; i++) {
+            for (int j = 0; j < maxVertexNum; j++) {
                 if (graph[i][j] == 0) {
-                    System.out.print(" * ");
+                    System.out.print(graph[i][j] + " ");
                 } else {
-                    System.out.print(" " + graph[i][j] + " ");
+                    System.out.print(graph[i][j] + " ");
                 }
+            }
+            if (i == maxVertexNum - 1) {
+                break;
             }
             System.out.println();
         }
     }
 
-    void floyd(int maxNode) {
-        printGraph(maxNode);
+    void floyd(int maxVertexNum) {
         System.out.println();
-        for (int k = 0; k < maxNode; k++) {
-            for (int i = 0; i < maxNode; i++) {
-                for (int j = 0; j < maxNode; j++) {
+        for (int k = 0; k < maxVertexNum; k++) {
+            for (int i = 0; i < maxVertexNum; i++) {
+                for (int j = 0; j < maxVertexNum; j++) {
                     if (graph[i][k] + graph[k][j] < graph[i][j]) {
                         graph[i][j] = graph[i][k] + graph[k][j];
                     }
                 }
             }
         }
-        printGraph(maxNode);
+        printGraph(maxVertexNum);
     }
 }
