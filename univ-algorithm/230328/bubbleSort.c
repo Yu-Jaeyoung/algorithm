@@ -3,27 +3,32 @@
 #include <time.h>
 
 void bubbleSort(int data[], int length) { // 데이터 개수를 받은 length
-
     int tmp; // swap 과정에서 값을 저장할 공간
-
+    int swapCount = -1;
     for (int i = length - 1; i > 0; i--) {
+
+        if (!swapCount) {
+            break;
+        }
+        swapCount = 0;
         for (int j = 0; j < i; j++) {
             if (data[j] > data[j + 1]) {
                 tmp = data[j];
                 data[j] = data[j + 1];
                 data[j + 1] = tmp;
+                swapCount++;
             }
         }
     }
 }
 
-
-
-// 출력 : 정렬 전 데이터, 정렬 후 데이터 출력
-
 int main() {
 
-    int n = 6;
+    int n;
+    printf("랜덤 수의 개수를 입력하시오. : ");
+
+    scanf("%d",&n);
+
     int *data = (int *) malloc(sizeof(int) * n);
 
     srand(time(NULL));
