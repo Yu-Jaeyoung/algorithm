@@ -4,6 +4,7 @@
 
 int count = 0;
 
+/*
 void merge(int data[], int left, int middle, int right) {
 
     int *tmp = (int *) malloc(sizeof(int) * (right - left + 1));
@@ -46,6 +47,35 @@ void merge(int data[], int left, int middle, int right) {
     printf("\n");
     free(tmp);
 }
+ */
+
+void merge(int data[], int left, int middle, int right) { // 내림차순 정렬
+    int *tmp = (int *) malloc(sizeof(int) * (right - left + 1));
+    int i, j, k, l;
+    i = left;
+    j = middle + 1;
+    k = left;
+    while (i <= middle && j <= right) {
+        if (data[i] >= data[j]) {
+            tmp[k++] = data[i++];
+        } else {
+            tmp[k++] = data[j++];
+        }
+    }
+    if (i > middle) {
+        for (l = j; l <= right; l++) {
+            tmp[k++] = data[l];
+        }
+    } else {
+        for (l = i; l <= middle; l++) {
+            tmp[k++] = data[l];
+        }
+    }
+    for (l = left; l <= right; l++) {
+        data[l] = tmp[l];
+    }
+    free(tmp);
+}
 
 void mergeSort(int data[], int left, int right) {
 
@@ -79,7 +109,7 @@ int main() {
         printf("%d ", data[i]);
     }
 
-    printf("\n정렬 후 배열 : \n");
+    printf("\n정렬 후 배열 : ");
 
     mergeSort(data, 0, n - 1);
 
