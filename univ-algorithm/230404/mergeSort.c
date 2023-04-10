@@ -49,12 +49,15 @@ void merge(int data[], int left, int middle, int right) {
 }
  */
 
-void merge(int data[], int left, int middle, int right) { // 내림차순 정렬
+void merge(int data[], int left, int middle, int right) {
+
     int *tmp = (int *) malloc(sizeof(int) * (right - left + 1));
+
     int i, j, k, l;
     i = left;
     j = middle + 1;
-    k = left;
+    k = 0;
+
     while (i <= middle && j <= right) {
         if (data[i] >= data[j]) {
             tmp[k++] = data[i++];
@@ -72,7 +75,7 @@ void merge(int data[], int left, int middle, int right) { // 내림차순 정렬
         }
     }
     for (l = left; l <= right; l++) {
-        data[l] = tmp[l];
+        data[l] = tmp[l-left];
     }
     free(tmp);
 }
