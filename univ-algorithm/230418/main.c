@@ -39,10 +39,9 @@ int main() {
 }*/
 
 int main() {
-    BSTNode *Tree = BST_CreateNode(123);
+    BSTNode *Tree = BST_CreateNode(55);
     BSTNode *Node = NULL;
 
-    BST_InsertNode(Tree, BST_CreateNode(55));
     BST_InsertNode(Tree, BST_CreateNode(15));
     BST_InsertNode(Tree, BST_CreateNode(60));
     BST_InsertNode(Tree, BST_CreateNode(8));
