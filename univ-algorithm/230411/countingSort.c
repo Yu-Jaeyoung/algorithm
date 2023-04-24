@@ -48,7 +48,7 @@ void countingSort(int data[], int lastIndexNum) {
     }
     printf("\n");
 
-    for (int i = 1; i < max + 1; i++) { // 누적하는 과정 마지막 자리까지 누적 해야하므로 i < max 설정
+    for (int i = 1; i <= max; i++) { // 누적하는 과정 마지막 자리까지 누적 해야하므로 i <= max 설정
         temp1[i] = temp1[i] + temp1[i - 1];
     }
 
@@ -59,16 +59,35 @@ void countingSort(int data[], int lastIndexNum) {
     }
     printf("\n");
 
+    /** 앞쪽부터 순차적으로 넣는 경우에는 기존 배열의 순서를 보장하지 못함.
+        for (int i = 0; i <= lastIndexNum; i++) {
+            temp2[temp1[data[i]] - 1] = data[i]; // 주어진 값의 해당하는 등수를 인덱스 번호로 가지는 temp2[]에 저장
+            temp1[data[i]]--; // 중복되는 값이 없으면 지워도 무방
 
-    // 여기까지 이해 완료
+            printf("look temp1 : ");
+            for (int j = 0; j < max + 1; j++) {
+                 printf("%d ", temp1[j]);
+            }
 
+            printf("\nlook temp2 : ");
+            for (int j = 0; j < lastIndexNum + 1; j++) {
+                printf("%d ", temp2[j]);
+            }
+            printf("\n");
+        }
+    */
 
-    for (int i = 0; i <= lastIndexNum; i++) {
-        temp2[temp1[data[i]] - 1] = data[i];
+    // 뒤쪽부터 순차적으로 넣는 경우에는 기존 배열의 순서를 보장함
+    for (int i = lastIndexNum; i >= 0; i--) {
+        temp2[temp1[data[i]] - 1] = data[i]; // 주어진 값의 해당하는 등수를 인덱스 번호로 가지는 temp2[]에 저장
         temp1[data[i]]--; // 중복되는 값이 없으면 지워도 무방
         printf("look temp1 : ");
         for (int j = 0; j < max + 1; j++) {
             printf("%d ", temp1[j]);
+        }
+        printf("\nlook temp2 : ");
+        for (int j = 0; j < lastIndexNum + 1; j++) {
+            printf("%d ", temp2[j]);
         }
         printf("\n");
     }
