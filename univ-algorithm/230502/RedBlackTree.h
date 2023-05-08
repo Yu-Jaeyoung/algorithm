@@ -9,7 +9,7 @@ typedef struct tagRBTNode {
     struct tagRBTNode *Right;
 
     enum {
-        RED, BlACK
+        RED, BLACK
     } Color;
 
     ElementType Data;
