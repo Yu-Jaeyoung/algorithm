@@ -7,6 +7,15 @@
 
 int pebbleSum(int length, int matrix[3][length]) {
 
+    // 정상적으로 입력이 넘어오는지 확인을 위한 부분
+    printf("\n");
+    for (int i = 0; i < 3; i++) {
+        for (int j = 0; j < length; j++) {
+            printf("%2d ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+
     int **countedMatrix = (int **) malloc(sizeof(int *) * 4);
 
     for (int i = 0; i < 4; i++) {
@@ -18,16 +27,6 @@ int pebbleSum(int length, int matrix[3][length]) {
         for (int j = 0; j < length; j++) {
             countedMatrix[i][j] = 0;
         }
-    }
-
-
-    // 정상적으로 입력이 넘어오는지 확인을 위한 부분
-    printf("\n");
-    for (int i = 0; i < 3; i++) {
-        for (int j = 0; j < length; j++) {
-            printf("%2d ", matrix[i][j]);
-        }
-        printf("\n");
     }
 
     // 0~2행 0열에 대한 초기화
@@ -77,6 +76,35 @@ int pebbleSum(int length, int matrix[3][length]) {
 
     int returnValue = max(max(countedMatrix[0][length - 1], countedMatrix[1][length - 1]),
                           max(countedMatrix[2][length - 1], countedMatrix[1][length - 1]));
+
+    int *patternArray = (int *) malloc(sizeof(int) * length);
+
+
+    // 조약돌 문제의 최대값에 해당하는 패턴 출력 과정
+    for (int i = 0; i < length; i++) {
+        for (int j = 0; j < 1;) {
+            int maxValue = max(max(countedMatrix[j][i], countedMatrix[j + 1][i]),
+                               max(countedMatrix[j + 2][i], countedMatrix[j + 3][i]));
+            if (maxValue == countedMatrix[j][i]) {
+                patternArray[i] = j + 1;
+            } else if (maxValue == countedMatrix[j + 1][i]) {
+                patternArray[i] = j + 2;
+            } else if (maxValue == countedMatrix[j + 2][i]) {
+                patternArray[i] = j + 3;
+            } else if (maxValue == countedMatrix[j + 3][i]) {
+                patternArray[i] = j + 4;
+            }
+            j++;
+        }
+    }
+
+    printf("\nPattern : ");
+    for (int i = 0; i < length; i++) {
+        printf("%d", patternArray[i]);
+        if (i < length - 1) {
+            printf(" -> ");
+        }
+    }
 
     free(countedMatrix[0]);
     free(countedMatrix);
