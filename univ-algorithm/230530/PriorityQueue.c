@@ -19,18 +19,18 @@ void PQ_Enqueue(PriorityQueue *PQ, PQNode NewNode) {
     int ParentPosition = PQ_GetParent(CurrentPosition);
 
     if (PQ->UsedSize == PQ->Capacity) {
-        if (PQ->UsedSize == PQ->Capacity) {
-            if (PQ->Capacity == 0)
-                PQ->Capacity = 1;
+        if (PQ->Capacity == 0)
+            PQ->Capacity = 1;
 
-            PQ->Capacity *= 2;
-            PQ->Nodes = (PQNode *) realloc(PQ->Nodes, sizeof(PQNode) * PQ->Capacity);
-        }
+        PQ->Capacity *= 2;
+        PQ->Nodes = (PQNode *) realloc(PQ->Nodes, sizeof(PQNode) * PQ->Capacity);
     }
+
     PQ->Nodes[CurrentPosition] = NewNode;
 
     /* 후속 처리 */
-    while (CurrentPosition > 0 && PQ->Nodes[CurrentPosition].Priority < PQ->Nodes[ParentPosition].Priority) {
+    while (CurrentPosition > 0 &&
+           PQ->Nodes[CurrentPosition].Priority < PQ->Nodes[ParentPosition].Priority) {
         PQ_SwapNodes(PQ, CurrentPosition, ParentPosition);
 
         CurrentPosition = ParentPosition;
@@ -80,7 +80,7 @@ void PQ_Dequeue(PriorityQueue *PQ, PQNode *Root) {
                 SelectedChild = LeftPosition;
         }
 
-        if (PQ->Nodes[SelectedChild].Priority < PQ->Nodes[RightPosition].Priority) {
+        if (PQ->Nodes[SelectedChild].Priority < PQ->Nodes[ParentPosition].Priority) {
             PQ_SwapNodes(PQ, ParentPosition, SelectedChild);
             ParentPosition = SelectedChild;
         } else
@@ -88,13 +88,12 @@ void PQ_Dequeue(PriorityQueue *PQ, PQNode *Root) {
 
         LeftPosition = PQ_GetLeftChild(ParentPosition);
         RightPosition = LeftPosition + 1;
-
-
     }
 
     if (PQ->UsedSize < (PQ->Capacity / 2)) {
         PQ->Capacity /= 2;
-        PQ->Nodes = (PQNode *) realloc(PQ->Nodes, sizeof(PQNode) * PQ->Capacity);
+        PQ->Nodes
+                = (PQNode *) realloc(PQ->Nodes, sizeof(PQNode) * PQ->Capacity);
     }
 }
 

@@ -7,16 +7,16 @@ enum VisitMode {
 
 typedef int ElementType;
 
-typedef struct tagVertex {
+typedef struct tagVertex { // Vertex = 꼭짓점, 노드
     ElementType Data;
-    int Visited;
+    enum VisitMode Visited;
     int Index;
 
     struct tagVertex *Next;
-    struct tagEdge *AdjacencyList;
+    struct tagEdge *AdjacencyList; // 인접 리스트
 } Vertex;
 
-typedef struct tagEdge {
+typedef struct tagEdge { // Edge = 간선
     int Weight;
     struct tagEdge *Next;
     Vertex *From;
@@ -29,19 +29,14 @@ typedef struct tagGraph {
 } Graph;
 
 Graph *CreateGraph();
-
 void DestroyGraph(Graph *G);
 
 Vertex *CreateVertex(ElementType Data);
-
+void AddVertex(Graph *G, Vertex *V);
 void DestroyVertex(Vertex *V);
 
 Edge *CreateEdge(Vertex *From, Vertex *Target, int Weight);
-
-void DestroyEdge(Edge *E);
-
-void AddVertex(Graph *G, Vertex *V);
-
 void AddEdge(Vertex *V, Edge *E);
+void DestroyEdge(Edge *E);
 
 void PrintGraph(Graph *G);

@@ -14,7 +14,6 @@ void DestroyGraph(Graph *G) {
         DestroyVertex(G->Vertices);
         G->Vertices = Vertices;
     }
-
     free(G);
 }
 
@@ -36,7 +35,6 @@ void DestroyVertex(Vertex *V) {
         DestroyEdge(V->AdjacencyList);
         V->AdjacencyList = Edge;
     }
-
     free(V);
 }
 
@@ -82,24 +80,21 @@ void AddEdge(Vertex *V, Edge *E) {
     }
 }
 
-void PrintGraph ( Graph* G )
-{
-    Vertex* V = NULL;
-    Edge* E = NULL;
-    if ( ( V = G->Vertices ) == NULL )
+void PrintGraph(Graph *G) {
+    Vertex *V = NULL;
+    Edge *E = NULL;
+    if ((V = G->Vertices) == NULL)
         return;
-    while ( V != NULL )
-    {
-        printf( "%c : ", V->Data );
+    while (V != NULL) {
+        printf("%c : ", V->Data);
 
-        if ( (E = V->AdjacencyList) == NULL ) {
+        if ((E = V->AdjacencyList) == NULL) {
             V = V->Next;
             printf("\n");
             continue;
         }
-        while ( E != NULL )
-        {
-            printf("%c[%d] ", E->Target->Data, E->Weight );
+        while (E != NULL) {
+            printf("%c[%d] ", E->Target->Data, E->Weight);
             E = E->Next;
         }
         printf("\n");

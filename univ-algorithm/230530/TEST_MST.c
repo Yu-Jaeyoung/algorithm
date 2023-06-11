@@ -33,25 +33,31 @@ int main(void) {
     AddEdge(B, CreateEdge(B, A, 35));
     AddEdge(B, CreateEdge(B, C, 126));
     AddEdge(B, CreateEdge(B, F, 150));
+
     AddEdge(C, CreateEdge(C, B, 126));
     AddEdge(C, CreateEdge(C, D, 117));
     AddEdge(C, CreateEdge(C, F, 162));
     AddEdge(C, CreateEdge(C, G, 220));
 
     AddEdge(D, CreateEdge(D, C, 117));
+
     AddEdge(E, CreateEdge(E, A, 247));
     AddEdge(E, CreateEdge(E, F, 82));
     AddEdge(E, CreateEdge(E, H, 98));
+
     AddEdge(F, CreateEdge(F, B, 150));
     AddEdge(F, CreateEdge(F, C, 162));
     AddEdge(F, CreateEdge(F, E, 82));
     AddEdge(F, CreateEdge(F, G, 154));
     AddEdge(F, CreateEdge(F, H, 120));
+
     AddEdge(G, CreateEdge(G, C, 220));
     AddEdge(G, CreateEdge(G, F, 154));
     AddEdge(G, CreateEdge(G, I, 106));
+
     AddEdge(H, CreateEdge(H, E, 98));
     AddEdge(H, CreateEdge(H, F, 120));
+
     AddEdge(I, CreateEdge(I, G, 106));
 
     printf("Prim's Algorithm\n");

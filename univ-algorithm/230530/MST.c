@@ -32,10 +32,10 @@ void Prim(Graph *G, Vertex *StartVertex, Graph *MST) {
     Weights[StartVertex->Index] = 0;
 
     while (!PQ_IsEmpty(PQ)) {
-        PQNode Pooped;
+        PQNode Popped;
 
-        PQ_Dequeue(PQ, &Pooped);
-        CurrentVertex = (Vertex *) Pooped.Data;
+        PQ_Dequeue(PQ, &Popped);
+        CurrentVertex = (Vertex *) Popped.Data;
 
         Fringes[CurrentVertex->Index] = CurrentVertex;
 
@@ -43,7 +43,8 @@ void Prim(Graph *G, Vertex *StartVertex, Graph *MST) {
         while (CurrentEdge != NULL) {
             Vertex *TargetVertex = CurrentEdge->Target;
 
-            if (Fringes[TargetVertex->Index] == NULL && CurrentEdge->Weight < Weights[TargetVertex->Index]) {
+            if (Fringes[TargetVertex->Index] == NULL &&
+                CurrentEdge->Weight < Weights[TargetVertex->Index]) {
                 PQNode NewNode = {CurrentEdge->Weight, TargetVertex};
                 PQ_Enqueue(PQ, NewNode);
 
@@ -62,10 +63,22 @@ void Prim(Graph *G, Vertex *StartVertex, Graph *MST) {
 
         FromIndex = Precedences[i]->Index;
         ToIndex = i;
+        // 출력문 추가
+        printf("%c - %c : %d\n",
+               MSTVertices[FromIndex]->Data,
+               MSTVertices[ToIndex]->Data,
+               Weights[i]);
 
-        AddEdge(MSTVertices[FromIndex], CreateEdge(MSTVertices[FromIndex], MSTVertices[ToIndex], Weights[i]));
 
-        AddEdge(MSTVertices[ToIndex], CreateEdge(MSTVertices[ToIndex], MSTVertices[FromIndex], Weights[i]));
+        AddEdge(MSTVertices[FromIndex],
+                CreateEdge(MSTVertices[FromIndex],
+                           MSTVertices[ToIndex],
+                           Weights[i]));
+
+        AddEdge(MSTVertices[ToIndex],
+                CreateEdge(MSTVertices[ToIndex],
+                           MSTVertices[FromIndex],
+                           Weights[i]));
     }
 
     free(Fringes);
@@ -77,14 +90,14 @@ void Prim(Graph *G, Vertex *StartVertex, Graph *MST) {
 }
 
 void Kruskal(Graph *G, Graph *MST) {
-    int i;
+    int i = 0;
+
     Vertex *CurrentVertex = NULL;
     Vertex **MSTVertices = (Vertex **) malloc(sizeof(Vertex *) * G->VertexCount);
     DisjointSet **VertexSet = (DisjointSet **) malloc(sizeof(DisjointSet *) * G->VertexCount);
 
     PriorityQueue *PQ = PQ_Create(10);
 
-    i = 0;
     CurrentVertex = G->Vertices;
     while (CurrentVertex != NULL) {
         Edge *CurrentEdge;
@@ -113,17 +126,23 @@ void Kruskal(Graph *G, Graph *MST) {
         PQ_Dequeue(PQ, &Popped);
         CurrentEdge = (Edge *) Popped.Data;
 
-        printf("%c - %c : %d\n", CurrentEdge->From->Data, CurrentEdge->Target->Data, CurrentEdge->Weight);
+        printf("%c - %c : %d\n",
+               CurrentEdge->From->Data,
+               CurrentEdge->Target->Data,
+               CurrentEdge->Weight);
         FromIndex = CurrentEdge->From->Index;
         ToIndex = CurrentEdge->Target->Index;
 
-        if (DS_FindSet(VertexSet[FromIndex]) != DS_FindSet(VertexSet[ToIndex])) {
+        if (DS_FindSet(VertexSet[FromIndex])
+            != DS_FindSet(VertexSet[ToIndex])) {
             AddEdge(MSTVertices[FromIndex],
-                    CreateEdge(MSTVertices[FromIndex], MSTVertices[ToIndex], CurrentEdge->Weight));
-
+                    CreateEdge(MSTVertices[FromIndex],
+                               MSTVertices[ToIndex],
+                               CurrentEdge->Weight));
             AddEdge(MSTVertices[ToIndex],
-                    CreateEdge(MSTVertices[ToIndex], MSTVertices[FromIndex], CurrentEdge->Weight));
-
+                    CreateEdge(MSTVertices[ToIndex],
+                               MSTVertices[FromIndex],
+                               CurrentEdge->Weight));
             DS_UnionSet(VertexSet[FromIndex], VertexSet[ToIndex]);
         }
     }

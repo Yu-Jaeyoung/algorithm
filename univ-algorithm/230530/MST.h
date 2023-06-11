@@ -2,7 +2,7 @@
 #include "PriorityQueue.h"
 #include "DisjointSet.h"
 
-#define MAX_WEIGHT 36267;
+#define MAX_WEIGHT 36267
 
 void Prim(Graph *G, Vertex *StartVertex, Graph *MST);
 
