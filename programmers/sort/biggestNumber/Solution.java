@@ -1,9 +1,9 @@
-package src.programmers.sort;
+package src.programmers.sort.biggestNumber;
 
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BiggestNumber {
+public class Solution {
     public String solution(int[] numbers) {
         String answer = "";
 

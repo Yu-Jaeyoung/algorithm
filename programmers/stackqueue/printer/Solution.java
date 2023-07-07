@@ -1,8 +1,8 @@
-package src.programmers.stackqueue;
+package src.programmers.stackqueue.printer;
 
 import java.util.LinkedList;
 import java.util.Queue;
-public class Printer {
+public class Solution {
     public int solution(int[] priorities, int location) {
         Queue<Location> queue = new LinkedList<>();
         int answer = 0;
