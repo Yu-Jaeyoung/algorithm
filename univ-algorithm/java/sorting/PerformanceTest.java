@@ -1,3 +1,5 @@
+import advanced.MergeSort;
+import advanced.QuickSort;
 import basic.BubbleSort;
 import basic.SelectionSort;
 import common.SortList;
@@ -11,6 +13,9 @@ public class PerformanceTest {
         Integer[] selectionList = new Integer[SIZE];
         Integer[] bubbleList = new Integer[SIZE];
         Integer[] insertionList = new Integer[SIZE];
+        Integer[] mergeList = new Integer[SIZE];
+        Integer[] quickList = new Integer[SIZE];
+
 
         Random random = new Random();
         for (int i = 0; i < SIZE; i++) {
@@ -18,6 +23,8 @@ public class PerformanceTest {
             selectionList[i] = value;
             bubbleList[i] = value;
             insertionList[i] = value;
+            mergeList[i] = value;
+            quickList[i] = value;
         }
 
         SortList<Integer> selectionSort = new SelectionSort<>(selectionList);
@@ -37,5 +44,17 @@ public class PerformanceTest {
         insertionSort.sort();
         endTime = System.nanoTime();
         System.out.println("삽입 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
+
+        SortList<Integer> mergeSort = new MergeSort<>(mergeList);
+        startTime = System.nanoTime();
+        mergeSort.sort();
+        endTime = System.nanoTime();
+        System.out.println("병합 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
+
+        SortList<Integer> quickSort = new QuickSort<>(quickList);
+        startTime = System.nanoTime();
+        quickSort.sort();
+        endTime = System.nanoTime();
+        System.out.println("퀵 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
     }
 }
