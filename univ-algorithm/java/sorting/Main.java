@@ -1,3 +1,4 @@
+import advanced.HeapSort;
 import advanced.MergeSort;
 import advanced.QuickSort;
 import basic.BubbleSort;
@@ -14,7 +15,8 @@ public class Main {
         // SortList<Integer> sort = new BubbleSort<>(list);
         // SortList<Integer> sort = new InsertionSort<>(list);
         // SortList<Integer> sort = new MergeSort<>(list);
-        SortList<Integer> sort = new QuickSort<>(list);
+        // SortList<Integer> sort = new QuickSort<>(list);
+        SortList<Integer> sort = new HeapSort<>(list);
         sort.sort();
         sort.print();
 
@@ -23,7 +25,8 @@ public class Main {
         // SortList<String> stringSort = new BubbleSort<>(stringList);
         // SortList<String> stringSort = new InsertionSort<>(stringList);
         // SortList<String> stringSort = new MergeSort<>(stringList);
-        SortList<String> stringSort = new QuickSort<>(stringList);
+        // SortList<String> stringSort = new QuickSort<>(stringList);
+        SortList<String> stringSort = new HeapSort<>(stringList);
         stringSort.sort();
         stringSort.print();
 
@@ -32,7 +35,8 @@ public class Main {
         // SortList<Double> doubleSort = new BubbleSort<>(doubleList);
         // SortList<Double> doubleSort = new InsertionSort<>(doubleList);
         // SortList<Double> doubleSort = new MergeSort<>(doubleList);
-        SortList<Double> doubleSort = new QuickSort<>(doubleList);
+        // SortList<Double> doubleSort = new QuickSort<>(doubleList);
+        SortList<Double> doubleSort = new HeapSort<>(doubleList);
         doubleSort.sort();
         doubleSort.print();
     }
