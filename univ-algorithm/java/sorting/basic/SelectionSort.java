@@ -16,14 +16,4 @@ public class SelectionSort<E extends Comparable<E>> extends SortList<E> {
         }
     }
 
-    private int getLargest(int last) {
-        int largest = 0;
-
-        for (int i = 1; i <= last; i++) {
-            if (list[i].compareTo(list[largest]) > 0) {
-                largest = i;
-            }
-        }
-        return largest;
-    }
 }
