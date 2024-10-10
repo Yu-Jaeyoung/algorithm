@@ -1,15 +1,17 @@
 import advanced.HeapSort;
 import advanced.MergeSort;
 import advanced.QuickSort;
+import advanced.ShellSort;
 import basic.BubbleSort;
 import basic.InsertionSort;
 import basic.SelectionSort;
 import common.SortList;
 import java.util.Random;
+import special.RadixSort;
 
 public class PerformanceTest {
 
-    public static final int SIZE = 100_000;
+    public static final int SIZE = 500_000;
 
     public static void main(String[] args) {
         Integer[] selectionList = new Integer[SIZE];
@@ -19,6 +21,7 @@ public class PerformanceTest {
         Integer[] quickList = new Integer[SIZE];
         Integer[] heapList = new Integer[SIZE];
         Integer[] shellList = new Integer[SIZE];
+        Integer[] radixList = new Integer[SIZE];
 
         Random random = new Random();
         for (int i = 0; i < SIZE; i++) {
@@ -30,6 +33,7 @@ public class PerformanceTest {
             quickList[i] = value;
             heapList[i] = value;
             shellList[i] = value;
+            radixList[i] = value;
         }
 
         SortList<Integer> selectionSort = new SelectionSort<>(selectionList);
@@ -68,10 +72,16 @@ public class PerformanceTest {
         endTime = System.nanoTime();
         System.out.println("힙 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
 
-        SortList<Integer> shellSort = new HeapSort<>(shellList);
+        SortList<Integer> shellSort = new ShellSort<>(shellList);
         startTime = System.nanoTime();
         shellSort.sort();
         endTime = System.nanoTime();
         System.out.println("쉘 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
+
+        SortList<Integer> radixSort = new RadixSort(radixList);
+        startTime = System.nanoTime();
+        radixSort.sort();
+        endTime = System.nanoTime();
+        System.out.println("기수 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
     }
 }
