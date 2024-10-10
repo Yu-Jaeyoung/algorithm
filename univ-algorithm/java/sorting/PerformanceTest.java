@@ -7,11 +7,12 @@ import basic.InsertionSort;
 import basic.SelectionSort;
 import common.SortList;
 import java.util.Random;
+import special.CountingSort;
 import special.RadixSort;
 
 public class PerformanceTest {
 
-    public static final int SIZE = 500_000;
+    public static final int SIZE = 50_000;
 
     public static void main(String[] args) {
         Integer[] selectionList = new Integer[SIZE];
@@ -22,10 +23,11 @@ public class PerformanceTest {
         Integer[] heapList = new Integer[SIZE];
         Integer[] shellList = new Integer[SIZE];
         Integer[] radixList = new Integer[SIZE];
+        Integer[] countingList = new Integer[SIZE];
 
         Random random = new Random();
         for (int i = 0; i < SIZE; i++) {
-            int value = random.nextInt(100_000);
+            int value = random.nextInt(50_000);
             selectionList[i] = value;
             bubbleList[i] = value;
             insertionList[i] = value;
@@ -34,6 +36,7 @@ public class PerformanceTest {
             heapList[i] = value;
             shellList[i] = value;
             radixList[i] = value;
+            countingList[i] = value;
         }
 
         SortList<Integer> selectionSort = new SelectionSort<>(selectionList);
@@ -83,5 +86,11 @@ public class PerformanceTest {
         radixSort.sort();
         endTime = System.nanoTime();
         System.out.println("기수 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
+
+        SortList<Integer> countingSort = new CountingSort(countingList);
+        startTime = System.nanoTime();
+        countingSort.sort();
+        endTime = System.nanoTime();
+        System.out.println("계수 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
     }
 }
