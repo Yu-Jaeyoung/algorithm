@@ -10,6 +10,8 @@ public class QuickSort<E extends Comparable<E>> extends SortList<E> {
 
     private void quickSort(int p, int r) {
         if (p < r) {
+            int k = (int) (Math.random() * (r - p + 1)) + p;    // 기준원소(pivot)을 랜덤으로 선택
+            swap(k, r);
             int q = partition(p, r);
             quickSort(p, q - 1);
             quickSort(q + 1, r);

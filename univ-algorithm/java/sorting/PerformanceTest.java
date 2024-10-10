@@ -18,6 +18,7 @@ public class PerformanceTest {
         Integer[] mergeList = new Integer[SIZE];
         Integer[] quickList = new Integer[SIZE];
         Integer[] heapList = new Integer[SIZE];
+        Integer[] shellList = new Integer[SIZE];
 
         Random random = new Random();
         for (int i = 0; i < SIZE; i++) {
@@ -28,6 +29,7 @@ public class PerformanceTest {
             mergeList[i] = value;
             quickList[i] = value;
             heapList[i] = value;
+            shellList[i] = value;
         }
 
         SortList<Integer> selectionSort = new SelectionSort<>(selectionList);
@@ -65,5 +67,11 @@ public class PerformanceTest {
         heapSort.sort();
         endTime = System.nanoTime();
         System.out.println("힙 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
+
+        SortList<Integer> shellSort = new HeapSort<>(shellList);
+        startTime = System.nanoTime();
+        shellSort.sort();
+        endTime = System.nanoTime();
+        System.out.println("쉘 정렬 시간: " + ((endTime - startTime) / 1000_000.0) + " ms");
     }
 }
